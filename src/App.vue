@@ -1,28 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<!--    <router-view></router-view>-->
+    <cmpHeader></cmpHeader>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+  import cmpHeader from '../src/components/cmp-header'
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    cmpHeader
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, dl, dt, dd, input, i, b { margin: 0; padding: 0; border: 0; font-weight:normal; font-style:normal;}
+  ul, ol { list-style-type: none; }
+  select, input, img { vertical-align: middle; outline: none; }
+  a { text-decoration: none; }
+  a { blr:"expression(this.onFocus=this.blur())"}
+  a { outline: none; }
+  html { overflow-x: hidden; }
+  .clearfix:after { content: ""; display: block; clear: both; }
+  .clearfix { zoom: 1; }
+  .fl { float: left; }
+  .fr { float: right; }
+
+  body {font-family:"Microsoft Yahei","微软雅黑",verdana;color:#333;}
+
+  .page {width:1090px;margin:0 auto;position:relative;}
+
+  .nbb {border-bottom:none!important;}
 </style>
