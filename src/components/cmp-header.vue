@@ -10,23 +10,23 @@
             </a>
             <div class="search-container fr">
                 <input type="text" class="search-txt fl"
-                       v-model="keyword"
-                       @focus="showPlaceholder=false"
-                       @blur="showPlaceholder=true"
+                       v-model="search.keyword"
+                       @focus="search.placeholder=false"
+                       @blur="search.placeholder=true"
                        @keydown.down="suggestActive++"
                        @keyup.up="suggestActive--"
                        @keydown.enter="doSearch"
 
                 >
-                <div class="suggest" v-if="suggest.length">
+                <div class="suggest" v-if="search.suggest.length">
                     <ul>
 <!--                        <li class="active">衣服</li>-->
-                        <li v-for="(item,index) in suggest" :class="{'active':index==suggest_active}" :key="index">{{item}}</li>
+                        <li v-for="(item,index) in search.suggest" :class="{'active':index==search.active}" :key="index">{{item}}</li>
                     </ul>
                 </div>
                 <a href="javascript:;" class="search-btn fl">搜索</a>
                 <i class="icon"></i>
-                <i class="placeholder" v-if="showPlaceholder&&!keyword">张一山同款 开衫体恤</i>
+                <i class="placeholder" v-if="search.placeholder&&!search.keyword">张一山同款 开衫体恤</i>
                 <div class="keyword-list clearfix">
                     <a href="javascript:;" class="fl">运动装备 7.5折起</a>
                     <a href="javascript:;" class="fl">蚕丝被 431元起</a>
@@ -41,7 +41,7 @@
                     <a href="javascript:;" class="title">首页</a>
                 </li>
                 <li class="catalog-href fl">
-                    <a href="javascript:;" class="title">居家生活</a>
+                    <a href="javascript:;" class="title" @mouseover="getCatalogs(0)">居家生活</a>
                 </li>
                 <li class="catalog-href fl">
                     <a href="javascript:;" class="title">服饰鞋包</a>
@@ -68,6 +68,7 @@
                     <a href="javascript:;" class="title">众筹</a>
                 </li>
             </ul>
+            {{$store.state.catalogs}}
             <div class="catalog-list">
                 <ul class="clearfix">
                     <li class="catalog-column fl">
@@ -223,36 +224,39 @@
         name: "cmp-header",
         data(){
             return{
-                keyword:'',
-                showPlaceholder:true,
-                suggest:[],
-                suggest_active:-1,
+                search:{
+                    keyword:'',
+                    placeholder:true,
+                    suggest:[],
+                    active:-1,
+                }
             }
         },
         created(){
-            console.log(this.suggestActive);
+
         },
         watch:{
-            async keyword(){
-                if (this.keyword){
+            async 'search.keyword'(){
+                this.search.active=-1
+                if (this.search.keyword){
                     try {
                         let {data}=await this.axios(`/searchautocomplete`,{
                             method:'get',
                             params:{
-                                kw:this.keyword
+                                kw:this.search.keyword
                             }
-                        })
+                        });
                         if(data.err){
                             console(data.msg)
                         }else {
-                            this.suggest=data.data
+                            this.search.suggest=data.data
                         }
                         console.log(data);
                     }catch (e) {
                         console.log(e)
                     }
                 }else {
-                    this.suggest=[]
+                    this.search.suggest=[]
                 }
             },
         },
@@ -281,25 +285,28 @@
             //     }
             // },
             doSearch(){
-               if (this.suggest_active==-1){
-                   alert(this.keyword)
+               if (this.search.active==-1){
+                   alert(this.search.keyword)
                }else {
-                   alert(this.suggest[this.suggest_active])
+                   alert(this.search.suggest[this.search.active])
                }
+            },
+            getCatalogs(index){
+                this.$store.dispatch('getCatalogs',index)
             }
         },
         computed:{
             suggestActive:{
                 get(){
-                    return this.suggest_active
+                    return this.search.active
                 },
                 set(val){
                     if (val<0){
                         val=0
-                    }else if (val>this.suggest.length){
-                        val=this.suggest.length-1
+                    }else if (val>this.search.suggest.length){
+                        val=this.search.suggest.length-1
                     }
-                    this.suggest_active=val
+                    this.search.active=val
                 }
             }
         }
