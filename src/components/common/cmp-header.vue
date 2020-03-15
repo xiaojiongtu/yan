@@ -2,7 +2,7 @@
     <div class="header">
         <div class="header-container clearfix">
             <div class="logo-container fl">
-                <a href="http://you.163.com/" class="logo">严选商城</a>
+                <router-link :to="{path:'/'}"  class="logo">严选商城</router-link>
             </div>
             <a href="/cart" class="cart fr">
                 <span>购物车</span>
@@ -10,23 +10,24 @@
             </a>
             <div class="search-container fr">
                 <input type="text" class="search-txt fl"
+                       ref="search"
                        v-model="search.keyword"
-                       @focus="search.placeholder=false"
-                       @blur="search.placeholder=true"
+                       @focus="search.placeholder=false,search.show=true"
+                       @blur="hideAutoComplete()"
                        @keydown.down="suggestActive++"
                        @keyup.up="suggestActive--"
-                       @keydown.enter="doSearch"
+                       @keydown.enter="doSearch()"
 
                 >
-                <div class="suggest" v-if="search.suggest.length">
+                <div class="suggest" v-if="search.suggest.length&&search.show">
                     <ul>
 <!--                        <li class="active">衣服</li>-->
-                        <li v-for="(item,index) in search.suggest" :class="{'active':index==search.active}" :key="index">{{item}}</li>
+                        <li v-for="(item,index) in search.suggest" @click="search.keyword=item,doSearch()" @mouseover="search.active=index" :class="{'active':index==search.active}" :key="index">{{item}}</li>
                     </ul>
                 </div>
-                <a href="javascript:;" class="search-btn fl">搜索</a>
+                <a href="javascript:;" class="search-btn fl" @click="doSearch()">搜索</a>
                 <i class="icon"></i>
-                <i class="placeholder" v-if="search.placeholder&&!search.keyword">张一山同款 开衫体恤</i>
+                <i class="placeholder" v-if="search.placeholder&&!search.keyword">{{search.default}}</i>
                 <div class="keyword-list clearfix">
                     <a href="javascript:;" class="fl">运动装备 7.5折起</a>
                     <a href="javascript:;" class="fl">蚕丝被 431元起</a>
@@ -41,19 +42,19 @@
                     <a href="javascript:;" class="title">首页</a>
                 </li>
                 <li class="catalog-href fl" v-for="(item,index) in nav.list" :key="index"
-                    @mouseover="nav.active=index"
-                    @mouseout="nav.active=-1"
+                    @mouseover="setNav(index)"
+                    @mouseout="setNav(index)"
                 >
                     <a href="javascript:;" class="title" >{{item}}</a>
                 </li>
             </ul>
-            <div class="catalog-list" v-if="nav.active>-1">
+            <div class="catalog-list" v-if="nav.active>-1" @mouseover="setNav(tempActive)" @mouseout="setNav(-1)">
                 <ul class="clearfix" >
                     <li class="catalog-column fl" v-for="(item,index) in $store.state.catalogs[nav.active]">
                         <div class="title">{{item.title}}</div>
                         <div>
                             <a href="#" class="catalog-item" v-for="(data,index) in item.children">
-                                <img :src="'http://api.zhinengshe.com/10001-you163/'+data.src" alt="">
+                                <img :src="data.src|imgpath" alt="">
                                 <span>{{data.title}}</span>
                             </a>
                         </div>
@@ -69,11 +70,15 @@
         name: "cmp-header",
         data(){
             return{
+                timer:null,
+                tempActive:-1,
                 search:{
                     keyword:'',
                     placeholder:true,
                     suggest:[],
                     active:-1,
+                    show:false,
+                    default:'张一山同款 开衫体恤'
                 },
                 nav:{
                     active:-1,
@@ -82,9 +87,18 @@
             }
         },
         created(){
-
+           this.search.keyword=this.$route.query.keyword
+            console.log("--header")
+            console.log(this.search.keyword)
         },
         watch:{
+            '$route'(){
+                if (this.$route.path!='/search'){
+                    this.search.keyword=''
+                }else {
+                    this.search.keyword=this.$route.query.keyword
+                }
+            },
             async 'search.keyword'(){
                 this.search.active=-1
                 if (this.search.keyword){
@@ -100,7 +114,6 @@
                         }else {
                             this.search.suggest=data.data
                         }
-                        console.log(data);
                     }catch (e) {
                         console.log(e)
                     }
@@ -137,14 +150,34 @@
             //     }
             // },
             doSearch(){
+                let keyword;
                if (this.search.active==-1){
-                   alert(this.search.keyword)
+                   //如果没有选中
+                   keyword=this.search.keyword
+
                }else {
-                   alert(this.search.suggest[this.search.active])
+                  //选下拉框的时候
+                   keyword=this.search.suggest[this.search.active]
                }
+                    keyword=keyword||this.search.default
+                    this.search.keyword=keyword
+                    this.$refs.search.blur()
+
+                    this.$router.push({name:'search',query:{keyword}})
             },
             getCatalogs(index){
                 this.$store.dispatch('getCatalogs',index)
+            },
+            setNav(index){
+                  clearTimeout(this.timer)
+                  this.timer=setTimeout(()=>{
+                      this.nav.active=index
+                  },500)
+             },
+            hideAutoComplete(){
+                 setTimeout(()=>{
+                     this.search.placeholder=true,this.search.show=false
+                 },500)
             }
         },
         computed:{
@@ -175,7 +208,7 @@
     .header .logo {
         display:block;
         width:124px; height:60px;
-        background:url(../assets/imgs/icon1.png) no-repeat 0 -202px;
+        background:url(../../assets/imgs/icon1.png) no-repeat 0 -202px;
         text-indent:-99999px;
     }
 
@@ -199,7 +232,7 @@
     .header .search-btn:hover {background:#C2AE8D}
     .header .search-container .icon {
         width:14px;height:14px;
-        background:url(../assets/imgs/icon1.png) no-repeat 0 -312px;
+        background:url(../../assets/imgs/icon1.png) no-repeat 0 -312px;
         position:absolute; left:18px; top:12px;
     }
     .header .search-container .placeholder {

@@ -22,7 +22,6 @@ export default new Vuex.Store({
                      method: 'get',
                      params: {index}
                  })
-                 console.log(data);
                  if(data.err){
                      console.log(data.err)
                  }else {

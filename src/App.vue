@@ -1,15 +1,17 @@
 <template>
   <div id="app">
-<!--    <router-view></router-view>-->
-    <cmpHeader></cmpHeader>
+      <cmpHeader></cmpHeader>
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import cmpHeader from '../src/components/cmp-header'
+  import cmpHeader from './components/common/cmp-header'
+  import Index from "./pages/index";
 export default {
   name: 'app',
   components: {
+      Index,
     cmpHeader
   }
 }
