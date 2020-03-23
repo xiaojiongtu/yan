@@ -207,10 +207,9 @@
         background:#f4f4f4;
         border:1px solid #e8e8e8;
     }
-    .zoomview-org  {
-        img{
+    .zoomview-org img {
+
             position: absolute;
-        }
     }
 
     /*  */
