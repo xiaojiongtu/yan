@@ -1,14 +1,22 @@
 <template>
     <div class="crumbs">
-        <a href="#">全部商品</a>
-        <span class="spliter">&gt;</span>
-        <a href="#" class="cur">枕头</a>
+        <router-link to="/">全部商品</router-link>
+        <template v-for="(path,index) in pathArray" >
+            <span class="spliter">&gt;</span>
+            <a :href="path.url" :class="{cur:pathArray.length-1==index}" :key="index">{{path.title}}</a>
+        </template>
     </div>
 </template>
 
 <script>
     export default {
-        name: "cmp-crumbs"
+        name: "cmp-crumbs",
+        props:{
+            pathArray:{
+                type:Array,
+                required:true
+            }
+        }
     }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="list-bg">
         <div class="page">
-            <cmp-crumbs></cmp-crumbs>
+            <cmp-crumbs :path-array="[{url:`/search?keyword=${keyword}`,title:keyword}]"></cmp-crumbs>
             <div class="item-list-container">
                 <div class="filter clearfix">
                     <span class="name fl">分类：</span>
@@ -31,7 +31,7 @@
         components: {CmpList, CmpPagination, CmpCrumbs},
         data(){
             return{
-               searchResult:null,
+                searchResult:null,
                 keyword:this.$route.query.keyword,
                 page:{
                     cur:1,

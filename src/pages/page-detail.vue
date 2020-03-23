@@ -1,175 +1,14 @@
 <template>
     <div class="detail-bg">
         <div class="page">
-            <cmp-crumbs></cmp-crumbs>
-            <div class="detail-header clearfix">
-                <!-- <div class="zoomview zoomview-open fl"> -->
-                <div class="zoomview fl">
-                    <div class="zoomview-big">
-                        <img src="../assets/imgs/zoom-big-1.png" alt="">
-                        <div class="zoomview-mask"></div>
-                    </div>
-                    <ul class="zoomview-thumbs clearfix">
-                        <li class="fl cur">
-                            <img src="../assets/imgs/zoom-thumb-1.png" alt="">
-                        </li>
-                        <li class="fl">
-                            <img src="../assets/imgs/zoom-thumb-2.jpg" alt="">
-                        </li>
-                        <li class="fl">
-                            <img src="../assets/imgs/zoom-thumb-3.jpg" alt="">
-                        </li>
-                        <li class="fl">
-                            <img src="../assets/imgs/zoom-thumb-4.jpg" alt="">
-                        </li>
-                        <li class="fl">
-                            <img src="../assets/imgs/zoom-thumb-5.jpg" alt="">
-                        </li>
-                    </ul>
-                    <div class="zoomview-org">
-                        <img src="../assets/imgs/zoom-org-1.png" alt="">
-                    </div>
-                </div>
-
-                <!-- not done -->
-                <div class="goods fr">
-                    <div class="goods-header clearfix">
-                        <div class="goods-title fl">
-                            <h3>大英博物馆 埃及神猫靠枕</h3>
-                            <span>请带我回家吧~喵！</span>
-                        </div>
-                        <div class="goods-rate fr">
-                            <div class="rate-num">
-                                100%
-                            </div>
-                            <div class="rate-txt">
-                                好评率
-                            </div>
-                        </div>
-                    </div>
-                    <div class="goods-detail">
-                        <div class="goods-detail-item big clearfix">
-                            <label class="fl">价格</label>
-                            <div class="fl price">
-                                ¥159
-                            </div>
-                        </div>
-                        <div class="goods-detail-item clearfix">
-                            <label class="fl">积分</label>
-                            <div class="fl point">
-                                购买最高得15积分
-                            </div>
-                        </div>
-                    </div>
-                    <div class="goods-order-detail">
-                        <div class="goods-order-detail-item clearfix">
-                            <label class="fl">抱枕</label>
-                            <ul class="order-type-list fl">
-                                <li class="fl cur">
-                                    <a href="#">猫咪</a>
-                                </li>
-                                <li class="fl">
-                                    <a href="#">狗子</a>
-                                </li>
-                                <li class="fl">
-                                    <a href="#">螃蟹</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="goods-order-detail-item clearfix">
-                            <label class="fl">数量</label>
-                            <div class="number-input fl">
-                                <a href="#" class="btn btn-plus btn-disabled fl">-</a>
-                                <input type="text" class="number fl" value="1" maxlength="8" />
-                                <a href="#" class="btn btn-minus fl">+</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="goods-btns">
-                        <a href="#" class="goods-btn goods-btn-buy fl">立即购买</a>
-                        <a href="#" class="goods-btn goods-btn-cart fl">加入购物车</a>
-                    </div>
-                </div>
-            </div>
+            <cmp-crumbs :path-array="['hshs']"></cmp-crumbs>
+            <detail-header></detail-header>
             <div class="detail-prompt">
 
             </div>
             <div class="detail-content clearfix">
-                <div class="detail-detail fl">
-                    <div class="detail-detail-header clearfix">
-                        <a href="#" class="detail-detail-header-btn fl">详情</a>
-                    </div>
-                    <ul class="detail-detail-table">
-                        <li class="detail-detail-table-item fl">
-                            <label class="fl">材质</label>
-                            <span class="fl">全棉</span>
-                        </li>
-                        <li class="detail-detail-table-item fl">
-                            <label class="fl">款式</label>
-                            <span class="fl">床单式</span>
-                        </li>
-                        <li class="detail-detail-table-item fl">
-                            <label class="fl">适用季节</label>
-                            <span class="fl">四季通用</span>
-                        </li>
-                        <li class="detail-detail-table-item fl">
-                            <label class="fl">图案</label>
-                            <span class="fl">几何</span>
-                        </li>
-                        <li class="detail-detail-table-item large fl">
-                            <label class="fl">风格</label>
-                            <span class="fl">现代简约、日式</span>
-                        </li>
-                        <li class="detail-detail-table-item large fl">
-                            <label class="fl">尺寸</label>
-                            <span class="fl">1.5米床： 被套 200*230cm/ 枕套：48*74cm*2/ 床单：245*250cm<br/>1.8米/ 2.0米床：被套 220*240cm/ 枕套：48*74cm*2/ 床单：245*270cm</span>
-                        </li>
-                    </ul>
-                    <div class="detail-detail-imglist">
-                        <img src="../assets/imgs/detail-1.jpg" alt="">
-                        <img src="../assets/imgs/detail-2.jpg" alt="">
-                        <img src="../assets/imgs/detail-3.jpg" alt="">
-                        <img src="../assets/imgs/detail-4.jpg" alt="">
-                        <img src="../assets/imgs/detail-5.jpg" alt="">
-                    </div>
-                </div>
-                <div class="detail-hot fr">
-                    <div class="detail-hot-header">
-                        24小时热销榜
-                    </div>
-                    <ul class="detail-hot-list">
-                        <li class="detail-hot-list-item">
-                            <img src="../assets/imgs/hot-1.png" alt="">
-                            <a href="#">严选礼品卡 1000元面值</a>
-                            <span>¥1000</span>
-                        </li>
-                        <li class="detail-hot-list-item">
-                            <img src="../assets/imgs/hot-2.png" alt="">
-                            <a href="#">严选礼品卡 1000元面值</a>
-                            <span>¥1000</span>
-                        </li>
-                        <li class="detail-hot-list-item">
-                            <img src="../assets/imgs/hot-3.png" alt="">
-                            <a href="#">严选礼品卡 1000元面值</a>
-                            <span>¥1000</span>
-                        </li>
-                        <li class="detail-hot-list-item">
-                            <img src="../assets/imgs/hot-4.png" alt="">
-                            <a href="#">严选礼品卡 1000元面值</a>
-                            <span>¥1000</span>
-                        </li>
-                        <li class="detail-hot-list-item">
-                            <img src="../assets/imgs/hot-5.png" alt="">
-                            <a href="#">严选礼品卡 1000元面值</a>
-                            <span>¥1000</span>
-                        </li>
-                        <li class="detail-hot-list-item nbb">
-                            <img src="../assets/imgs/hot-6.png" alt="">
-                            <a href="#">严选礼品卡 1000元面值</a>
-                            <span>¥1000</span>
-                        </li>
-                    </ul>
-                </div>
+               <cmp-content></cmp-content>
+                <cmp-hot></cmp-hot>
             </div>
         </div>
     </div>
@@ -177,9 +16,12 @@
 
 <script>
     import CmpCrumbs from "../components/common/cmp-crumbs";
+    import DetailHeader from "../components/detail/detail-header";
+    import CmpContent from "../components/detail/cmp-content";
+    import CmpHot from "../components/detail/cmp-hot";
     export default {
         name: "page-detail",
-        components: {CmpCrumbs}
+        components: {CmpHot, CmpContent, DetailHeader, CmpCrumbs}
     }
 </script>
 
@@ -374,45 +216,5 @@
     .detail-detail-imglist {width:750px;}
     .detail-detail-imglist img {width:750px;display:block;}
 
-
-    .detail-hot {width:300px;border:1px solid #e8e8e8;}
-    .detail-hot-header {
-        width:298px;height:43px;line-height:43px;
-        text-align:center;
-        border:1px solid #e8e8e8;
-        background:#f5f5f5;
-        font-size:18px;font-weight:700;
-    }
-
-    .detail-hot-list {
-        width:298px;
-    }
-    .detail-hot-list-item {
-        width:250px;height:318px;
-        margin:24px;margin-bottom:0;
-        border-bottom:1px solid #e8e8e8;
-    }
-    .detail-hot-list-item img {
-        display:block;
-        width:250px;height:250px;
-    }
-    .detail-hot-list-item a {
-        display:block;
-        width:240px;height:18px;
-        margin-bottom:8px;
-        text-align:center;line-height:18px;
-        font-size:14px;
-        color:#333;
-    }
-    .detail-hot-list-item a:hover {
-        color:#b4a078;
-    }
-
-    .detail-hot-list-item span {
-        display:block;
-        height:24px;line-height:24px;color:#d62525;
-        text-align:center;
-        font-size:14px;
-    }
 
 </style>
